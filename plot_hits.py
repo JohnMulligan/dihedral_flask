@@ -1,3 +1,4 @@
+import random
 import os
 import plotly.graph_objects as go
 import plotly.express as px
@@ -26,7 +27,7 @@ def df_from_consolidatedfile(consolidatedfile):
 		records.append(record)
 	df=pd.DataFrame.from_records(records)
 	df=df.sort_values(by=['np_id'])
-	print(df, df['this_folding_np_id'])
+# 	print(df, df['this_folding_np_id'])
 	return df
 
 def main(N):
@@ -91,7 +92,7 @@ def main(N):
 	label_max_chars=5
 	
 	anglelabelmap={str(angle):str(angle)[:label_max_chars] for angle in df['angle'].unique()}
-	print("=------>",anglelabelmap)
+# 	print("=------>",anglelabelmap)
 	fig = px.line_3d(
 		df,
 		x="angle",
@@ -103,10 +104,57 @@ def main(N):
 	
 	clickables=[]
 	
+	colorlist=['aqua','aquamarine','azure',
+		'bisque','black','blanchedalmond','blue',
+		'blueviolet','brown','burlywood','cadetblue',
+		'chartreuse','chocolate','coral','cornflowerblue',
+		'cornsilk','crimson','cyan','darkblue','darkcyan',
+		'darkgoldenrod','darkgray','darkgrey','darkgreen',
+		'darkkhaki','darkmagenta','darkolivegreen','darkorange',
+		'darkorchid','darkred','darksalmon','darkseagreen',
+		'darkslateblue','darkslategray','darkslategrey',
+		'darkturquoise','darkviolet','deeppink','deepskyblue',
+		'dimgray','dimgrey','dodgerblue','firebrick',
+		'floralwhite','forestgreen','fuchsia','gainsboro',
+		'ghostwhite','gold','goldenrod','gray','grey','green',
+		'greenyellow','honeydew','hotpink','indianred','indigo',
+		'khaki','lavender','lawngreen',
+		'lemonchiffon','lime','limegreen',
+		'linen','magenta','maroon','mediumaquamarine',
+		'mediumblue','mediumorchid','mediumpurple',
+		'mediumseagreen','mediumslateblue','mediumspringgreen',
+		'mediumturquoise','mediumvioletred','midnightblue',
+		'mintcream','mistyrose','moccasin','navajowhite','navy',
+		'olive','olivedrab','orange','orangered',
+		'orchid','palegoldenrod','palegreen','paleturquoise',
+		'palevioletred','papayawhip','peachpuff','peru','pink',
+		'plum','powderblue','purple','red','rosybrown',
+		'royalblue','saddlebrown','salmon','sandybrown',
+		'seagreen','sienna','silver','skyblue',
+		'slateblue','springgreen',
+		'steelblue','tan','teal','thistle','tomato','turquoise',
+		'violet','wheat','yellow',
+		'yellowgreen'
+	]
+	
+	usedcolors=[]
+	anglecolors={}
+	for angle in anglelabelmap:
+		chosencolor=random.choice(colorlist)
+		while chosencolor not in usedcolors:
+			chosencolor=random.choice(colorlist)
+			usedcolors.append(chosencolor)
+		anglecolors[angle]=chosencolor
+	
+	
 	for idx in range(len(fig.data)):
-		print(fig.data[idx].name)
-		newname=anglelabelmap[fig.data[idx].name]
-		print("-->",newname)
+# 		print(fig.data[idx].name)
+		angle=fig.data[idx].name
+		newname=anglelabelmap[angle]
+		newcolor=anglecolors[str(angle)]
+		
+		fig.data[idx]['line']['color']=newcolor
+# 		print("-->",newname)
 		fig.data[idx].name=newname
 	
 	for angle in localmaxes:
@@ -121,7 +169,8 @@ def main(N):
 				y=np_ids,
 				z=close_neighborings_counts,
 				mode='markers',
-				name=str(angle)[:label_max_chars]
+				name=str(angle)[:label_max_chars],
+				marker={'color':anglecolors[str(angle)]}
 			)
 		)
 		
@@ -132,7 +181,6 @@ def main(N):
 			angleunderscore=str(angle).replace('.','_')
 		
 			clickables.append('_'.join([str(i) for i in ['p',N,np_id,angleunderscore]]))
-	
 	
 	
 	fig.update_layout(scene = dict(

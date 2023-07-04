@@ -40,6 +40,9 @@
 
 <script language="javascript">
 var N={{ N }};
+var selected_node=null;
+var sketchname
+
 </script>
 
 </head>
@@ -47,13 +50,30 @@ var N={{ N }};
 <body>
 <!-- from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns_responsive -->
 	<div class="row">
-		<p>Copyright John Connor Mulligan, 2023</p>
+		<p>
+			Copyright John Connor Mulligan, 2023 <span id="selected_node"> -- <a href='/{{ N }}/{{ sketch_name }}'>Save this selection</a></span> -- or <a href='/{{ N }}/'>random choice</a>
+			<br/>
+			{% if N == "10" %}
+			Go to: <a href="12">12-sided</a> | <a href="14">14-sided</a>
+			{% elif N == "12" %}
+			Go to: <a href="10">10-sided</a> | <a href="14">14-sided</a>
+			{% elif N == "14" %}
+			Go to: <a href="10">10-sided</a> | <a href="12">12-sided</a>
+			{% endif %}
+			<br/><a href="https://github.com/JohnMulligan/truncated_tetrahedron" target="_blank">What is this?</a>
+		</p>
+		
 		<div class="column" id='processinganimationdiv'></div>
-		<div class="column" style="width:600px;height:600px" id='scatterplotdiv'>
+		<div class="column" style="width:600px;height:800px" id='scatterplotdiv'>
 			<!-- Plotly chart will be drawn inside this DIV -->
 		</div>
 	</div>
 </body>
-	<script src='static/js/scatterplot.js'></script>
-	<script src='static/js/processinganimation_{{ N }}.js'></script>
+	<script src='/static/js/scatterplot.js'></script>
+	<script src='/static/js/processinganimation_{{ N }}.js'></script>
+	<script language="javascript">
+		{% if sketch_name %}
+			sketchname="{{ sketch_name }}"
+		{% endif %}
+	</script>
 </html>

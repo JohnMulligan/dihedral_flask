@@ -44,6 +44,7 @@
 // 
 // 
 
+
 axios.get('http://127.0.0.1:5000/plotly_json/'+N.toString())
   .then((response) => {
     console.log(response.data);
@@ -67,7 +68,15 @@ axios.get('http://127.0.0.1:5000/plotly_json/'+N.toString())
 		var scriptname=xyz.join('_')
 		if (clickables.includes(scriptname)){
 			sketchname=scriptname;
+			selected_node=scriptname;
+			var savelinks=document.getElementById('selected_node');
+			savelinks.innerHTML="abcdefg"
+			var innerh=" -- <a href='/"+N+"/"+sketchname+"'>Save this selection</a>"
+			savelinks.innerHTML=innerh
+			
 		}
+		
+		
 
 	});
     
