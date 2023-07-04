@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favico.ico') }}">
 	<style>
 		* {
 		  box-sizing: border-box;
@@ -29,6 +30,7 @@
 
 	<!-- Load plotly.js into the DOM -->
 	<script src='https://cdn.plot.ly/plotly-2.9.0.min.js'></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
 	
@@ -47,7 +49,7 @@ var N={{ N }};
 	<div class="row">
 		<p>Copyright John Connor Mulligan, 2023</p>
 		<div class="column" id='processinganimationdiv'></div>
-		<div class="column" style="width:500px;height:500px" id='scatterplotdiv'>
+		<div class="column" style="width:600px;height:600px" id='scatterplotdiv'>
 			<!-- Plotly chart will be drawn inside this DIV -->
 		</div>
 	</div>
