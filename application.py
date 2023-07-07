@@ -1,4 +1,4 @@
-from flask import Flask,render_template,jsonify,send_from_directory
+from flask import Flask,render_template,jsonify,send_from_directory,redirect
 import os
 import re
 import plot_hits
@@ -6,6 +6,10 @@ import random
 import json
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
+
+@application.route('/')
+def indexpage():
+	return redirect("/12", code=302)
 
 @application.route('/<N>')
 @application.route('/<N>/')

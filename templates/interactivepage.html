@@ -54,11 +54,13 @@ var sketchname
 			Copyright John Connor Mulligan, 2023 <span id="selected_node"> -- <a href='/{{ N }}/{{ sketch_name }}'>Save this selection</a></span> -- or <a href='/{{ N }}/'>random choice</a>
 			<br/>
 			{% if N == "10" %}
-			Go to: <a href="12">12-sided</a> | <a href="14">14-sided</a>
+			Go to: <a href="12">12-sided</a> | <a href="14">14-sided</a> | <a href="16">16-sided</a>
 			{% elif N == "12" %}
-			Go to: <a href="10">10-sided</a> | <a href="14">14-sided</a>
+			Go to: <a href="10">10-sided</a> | <a href="14">14-sided</a> | <a href="16">16-sided</a>
 			{% elif N == "14" %}
-			Go to: <a href="10">10-sided</a> | <a href="12">12-sided</a>
+			Go to: <a href="10">10-sided</a> | <a href="12">12-sided</a> | <a href="16">16-sided</a>
+			{% elif N == "16" %}
+			Go to: <a href="10">10-sided</a> | <a href="12">12-sided</a> | <a href="14">14-sided</a>
 			{% endif %}
 			<br/><a href="https://github.com/JohnMulligan/truncated_tetrahedron" target="_blank">What is this?</a>
 		</p>
