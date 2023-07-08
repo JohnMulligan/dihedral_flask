@@ -4,13 +4,13 @@ import re
 import plot_hits
 import random
 import json
-# EB looks for an 'application' callable by default.
-application = Flask(__name__)
+# PA looks for an 'app' callable by default.
+app = Flask(__name__)
 
-@application.route('/')
-@application.route('/<N>')
-@application.route('/<N>/')
-@application.route('/<N>/<sketch_name>')
+@app.route('/')
+@app.route('/<N>')
+@app.route('/<N>/')
+@app.route('/<N>/<sketch_name>')
 def interactive_page(N=None,sketch_name=None):
 
 	
@@ -40,7 +40,7 @@ def interactive_page(N=None,sketch_name=None):
     
 	return render_template('interactivepage.html', **context)
 
-@application.route('/plotly_json/<N>')
+@app.route('/plotly_json/<N>')
 def plotly_json(N):
 	plotly_dict=plot_hits.main(N)
 	
@@ -50,5 +50,5 @@ def plotly_json(N):
 if __name__ == "__main__":
     # Setting debug to True enables debug output. This line should be
     # removed before deploying a production app.
-    application.debug = True
-    application.run()
+    app.debug = True
+    app.run()
