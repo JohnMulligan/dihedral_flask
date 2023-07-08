@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favico.ico') }}">
+	<style>
+		* {
+		  box-sizing: border-box;
+		}
+
+		/* Create two equal columns that floats next to each other */
+		.column {
+		  float: left;
+		  padding: 10px;
+		}
+
+		/* Clear floats after the columns */
+		.row:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+
+		/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+		@media screen and (max-width: 600px) {
+		  .column {
+			width: 100%;
+		  }
+	}
+	</style>
+
+	<!-- Load plotly.js into the DOM -->
+	<script src='https://cdn.plot.ly/plotly-2.9.0.min.js'></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+	
+{% for processing_script_fname in processing_script_fnames %}
+	<script src="../static/{{ N }}/{{ processing_script_fname }}"></script>
+{% endfor %}
+
+<script language="javascript">
+var N={{ N }};
+var selected_node=null;
+var sketchname
+
+</script>
+
+</head>
+
+<body>
+<!-- from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns_responsive -->
+	<div class="row">
+		<p>
+			Copyright John Connor Mulligan, 2023 <span id="selected_node"> -- <a href='/{{ N }}/{{ sketch_name }}'>Save this selection</a></span> -- or <a href='/{{ N }}/'>random choice</a>
+			<br/>
+			{% if N == "10" %}
+			Go to: <a href="/12">12-sided</a> | <a href="/14">14-sided</a> | <a href="/16">16-sided</a>
+			{% elif N == "12" %}
+			Go to: <a href="/10">10-sided</a> | <a href="/14">14-sided</a> | <a href="/16">16-sided</a>
+			{% elif N == "14" %}
+			Go to: <a href="/10">10-sided</a> | <a href="/12">12-sided</a> | <a href="/16">16-sided</a>
+			{% elif N == "16" %}
+			Go to: <a href="/10">10-sided</a> | <a href="/12">12-sided</a> | <a href="/14">14-sided</a>
+			{% endif %}
+			<br/><a href="https://github.com/JohnMulligan/truncated_tetrahedron" target="_blank">What is this?</a>
+		</p>
+		
+		<div class="column" id='processinganimationdiv'></div>
+		<div class="column" style="width:600px;height:800px" id='scatterplotdiv'>
+			<!-- Plotly chart will be drawn inside this DIV -->
+		</div>
+	</div>
+</body>
+	<script src='/static/js/scatterplot.js'></script>
+	<script src='/static/js/processinganimation_{{ N }}.js'></script>
+	<script language="javascript">
+		{% if sketch_name %}
+			sketchname="{{ sketch_name }}"
+		{% endif %}
+	</script>
+</html>
