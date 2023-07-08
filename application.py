@@ -8,15 +8,16 @@ import json
 application = Flask(__name__)
 
 @application.route('/')
-def indexpage():
-	return redirect("/12", code=302)
-
 @application.route('/<N>')
 @application.route('/<N>/')
 @application.route('/<N>/<sketch_name>')
-def interactive_page(N,sketch_name=None):
+def interactive_page(N=None,sketch_name=None):
 
-	N=str(N)
+	
+	if N is None:
+		return redirect("/12")
+	else:
+		N=str(N)
 	
 	processing_script_fnames=[f for f in os.listdir('static/%s' %N)
 		if re.match('processing_[0-9]+_[0-9].*.js',f)
